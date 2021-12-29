@@ -50,7 +50,9 @@ def hangman(word):
             print(ve)
         if intentos == 0:
             os.system("cls")
-            print("Has perdido, ya no tienes vidas")
+            print("Has perdido, ya no tienes vidas\nLa palabra era:")
+            for i in range(len(word)):
+                print(word[i].upper()+" ", end="")
             break
     if word_to_guess == word:
         os.system("cls")
