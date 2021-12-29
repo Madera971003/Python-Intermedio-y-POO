@@ -2,7 +2,7 @@ import random
 import os
 
 def read():
-    with open("./archivos/datas.txt", "r", encoding="utf-8") as f:
+    with open("./archivos/data.txt", "r", encoding="utf-8") as f:
         datos = [line.strip('\n') for line in f]
     datos = {key:value for key, value in enumerate(datos)}
     return datos
@@ -16,28 +16,47 @@ def normalize(word):
 
 def hangman(word):
     word_to_guess = len(word)*"_"
-    #Que no sean dos o mas letras
-    #que no sea numero
-    #que no sea simbolo
+    os.system("cls")
+    intentos = 7
     while word_to_guess != word:
+        print("Intentos restantes: ", intentos)
         print("¡¡Adivina la palabra!!")
         for i in range(len(word)):
             print(word_to_guess[i].upper()+" ", end="")
-        letter = normalize(input(str("\nIngresa una letra!!: ")))
-        if letter in word:
-            word_to_guess = list(word_to_guess)
-            for i in range(len(word)):
-                if letter == word[i]:
-                    word_to_guess[i] = letter
+        letter = normalize(input("\nIngresa una letra: "))
+        #assert len(letter) == 1, "No se permiten más de dos caracteres!"
+        try:
+            if len(letter) == 0:
+                raise ValueError("No se puede ingresar una cadena vacía")
+            try:
+                if len(letter) > 1:
+                    raise ValueError("No se permite más de un caracter")
+                if letter in word:
+                    word_to_guess = list(word_to_guess)
+                    for i in range(len(word)):
+                        if letter == word[i]:
+                            word_to_guess[i] = letter
+                    os.system("cls")
+                else:
+                    intentos = intentos-1
+                    os.system("cls")
+                    print("Letra no encontrada, intenta de nuevo...")
+                word_to_guess = "".join(word_to_guess)
+            except ValueError as more_caracter:
+                os.system("cls")
+                print(more_caracter)
+        except ValueError as ve:
             os.system("cls")
-        else:
+            print(ve)
+        if intentos == 0:
             os.system("cls")
-            print("Letra no encontrada, intenta de nuevo...\n")
-        word_to_guess = "".join(word_to_guess)
-    os.system("cls")
-    print("Felicidades, lo has logrado!!!")
-    for i in range(len(word)):
-            print(word_to_guess[i].upper()+" ", end="")
+            print("Has perdido, ya no tienes vidas")
+            break
+    if word_to_guess == word:
+        os.system("cls")
+        print("Felicidades, lo has logrado!!!")
+        for i in range(len(word)):
+                print(word_to_guess[i].upper()+" ", end="")
 def run():
     datos = read()
     word  = normalize(datos.get(random.randint(0, len(datos)-1)))
