@@ -4,7 +4,7 @@ import java.util.Map;
 class UberBlack extends Car{ //extends Car: toma las variables de la clase padre
     Map<String, Map<String, Integer>> typeCarAccepted;
     ArrayList<String> seatsMaterial;
-
+    //Constructor
     public UberBlack(String license, Account driver, String brand, String model,
     Map<String, Map<String, Integer>> typeCarAccepted,
     ArrayList<String> seatsMaterial){
