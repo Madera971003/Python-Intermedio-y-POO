@@ -4,4 +4,13 @@ class UberVan extends Car{
         this.typeCarAccepted = typeCarAccepted;
         this.seatsMaterial = seatsMaterial;
     }
+
+    //General functions
+    setPassenger(passenger){
+        if (passenger == 6) {
+            this.passenger == passenger;
+        }else{
+            console.log("Necesitas asignar 6 pasajeros")
+        }
+    }
 }
